@@ -51,13 +51,13 @@ cmp.setup({
 
 require("mason").setup({})
 require("mason-lspconfig").setup({
-	ensure_installed = { "tsserver", "clangd", "pyright" },
+	ensure_installed = { "clangd", "pyright" },
 	handlers = {
 		lsp_zero.default_setup,
 	},
 })
 
-vim.keymap.set("n", "<Leader>ph", "<cmd>ClangdSwitchSourceHeader<cr>")
+vim.keymap.set("n", "<Leader>pch", "<cmd>ClangdSwitchSourceHeader<cr>")
 
 require("autocommand")
 require("nvim-autopairs").setup({})

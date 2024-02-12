@@ -25,6 +25,12 @@ local M = {
 			vim.keymap.set("n", "<space>f", function()
 				vim.lsp.buf.format({ async = true })
 			end, opts)
+			vim.api.nvim_set_keymap(
+				"n",
+				"<leader>sya",
+				[[:set filetype=yaml.ansible<CR>]],
+				{ noremap = true, silent = true }
+			)
 		end,
 	}),
 }
