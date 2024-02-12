@@ -41,8 +41,6 @@ lspconfig.lua_ls.setup({
 	},
 })
 
-require("autocommand")
-
 local cmp = require("cmp")
 
 cmp.setup({
@@ -61,6 +59,6 @@ require("mason-lspconfig").setup({
 
 vim.keymap.set("n", "<Leader>ph", "<cmd>ClangdSwitchSourceHeader<cr>")
 
+require("autocommand")
 require("nvim-autopairs").setup({})
-
 require("formatter-nvim")
