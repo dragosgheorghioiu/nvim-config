@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.keymap.set("n", "<leader>pv", vim.cmd.Ex)
 
 local vimset = vim.opt -- set options
 vimset.tabstop = 2
@@ -62,6 +61,8 @@ vim.keymap.set("n", "<Leader>pch", "<cmd>ClangdSwitchSourceHeader<cr>")
 require("autocommand")
 require("nvim-autopairs").setup({})
 require("formatter-nvim")
+require("oil").setup({})
+vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- ##############################Harpoon##############################
 local harpoon = require("harpoon")
