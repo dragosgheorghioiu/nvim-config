@@ -64,6 +64,14 @@ require("formatter-nvim")
 require("oil").setup({})
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
+-- ##############################SIGNATURE##############################
+require("lsp_signature").setup({})
+vim.keymap.set({ "i" }, "<C-k>", function()
+	require("lsp_signature").toggle_float_win()
+end, { silent = true, noremap = true, desc = "toggle signature" })
+
+-- ##############################SIGNATURE##############################
+
 -- ##############################Harpoon##############################
 local harpoon = require("harpoon")
 
