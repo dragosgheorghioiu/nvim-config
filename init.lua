@@ -65,7 +65,10 @@ require("oil").setup({})
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- ##############################SIGNATURE##############################
-require("lsp_signature").setup({})
+local lsp_signature_config = {
+	hint_prefix = "-> ",
+}
+require("lsp_signature").setup(lsp_signature_config)
 vim.keymap.set({ "i" }, "<C-k>", function()
 	require("lsp_signature").toggle_float_win()
 end, { silent = true, noremap = true, desc = "toggle signature" })
