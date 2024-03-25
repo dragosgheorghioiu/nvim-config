@@ -6,6 +6,8 @@ vimset.softtabstop = 2
 vimset.shiftwidth = 2
 vimset.number = true
 vimset.relativenumber = true
+vimset.conceallevel = 2
+vimset.clipboard = "unnamedplus"
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -26,6 +28,7 @@ require("lazy").setup("plugins")
 local teles = require("telescope.builtin")
 vim.keymap.set("n", "<leader>pf", teles.find_files, {})
 vim.keymap.set("n", "<leader>ps", teles.live_grep, {})
+vim.keymap.set("n", "<leader>pe", teles.diagnostics, {})
 
 local lsp_zero = require("lsp-zero")
 local lspconfig = require("lspconfig")
@@ -60,7 +63,7 @@ cmp.setup({
 
 require("mason").setup({})
 require("mason-lspconfig").setup({
-	ensure_installed = { "clangd", "pyright" },
+	ensure_installed = { "clangd", "pyright", "lua_ls" },
 	handlers = {
 		lsp_zero.default_setup,
 	},
@@ -111,4 +114,16 @@ end)
 vim.keymap.set("n", "<leader>h4", function()
 	harpoon:list():select(4)
 end)
--- ##############################Harpoon##############################
+-- ##############################Harpoon################################
+-- ##############################Obsidian###############################
+local obsidian = require("obsidian")
+local config = {
+	workspaces = {
+		{
+			name = "Dregos",
+			path = "~/Dregos",
+		},
+	},
+}
+obsidian.setup(config)
+-- ##############################Obsidian###############################
