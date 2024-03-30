@@ -80,6 +80,7 @@ vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 -- ##############################SIGNATURE##############################
 local lsp_signature_config = {
 	hint_prefix = "-> ",
+	floating_window = false,
 }
 require("lsp_signature").setup(lsp_signature_config)
 vim.keymap.set({ "i" }, "<C-k>", function()
@@ -115,15 +116,3 @@ vim.keymap.set("n", "<leader>h4", function()
 	harpoon:list():select(4)
 end)
 -- ##############################Harpoon################################
--- ##############################Obsidian###############################
-local obsidian = require("obsidian")
-local config = {
-	workspaces = {
-		{
-			name = "Dregos",
-			path = "~/Dregos",
-		},
-	},
-}
-obsidian.setup(config)
--- ##############################Obsidian###############################
