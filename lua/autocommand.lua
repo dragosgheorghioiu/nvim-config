@@ -12,7 +12,7 @@ local M = {
 			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
 			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
 			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-			vim.keymap.set("n", "<C-k>", vim.lsp.buf.signature_help, opts)
+			vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts)
 			vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
 			vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
 			vim.keymap.set("n", "<space>wl", function()
@@ -25,12 +25,6 @@ local M = {
 			vim.keymap.set("n", "<space>f", function()
 				vim.lsp.buf.format({ async = true })
 			end, opts)
-			vim.api.nvim_set_keymap(
-				"n",
-				"<leader>sya",
-				[[:set filetype=yaml.ansible<CR>]],
-				{ noremap = true, silent = true }
-			)
 		end,
 	}),
 }

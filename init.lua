@@ -8,6 +8,7 @@ vimset.number = true
 vimset.relativenumber = true
 vimset.conceallevel = 2
 vimset.clipboard = "unnamedplus"
+vimset.termguicolors = true
 
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
@@ -54,20 +55,22 @@ require("lspconfig").clangd.setup({
 })
 
 local cmp = require("cmp")
-
 cmp.setup({
-	mapping = cmp.mapping.preset.insert({
-		["<CR>"] = cmp.mapping.confirm({ select = false }),
-	}),
+	mapping = {
+		["<CR>"] = cmp.mapping.confirm({ select = true }),
+	},
 })
 
 require("mason").setup({})
-require("mason-lspconfig").setup({
+local mason_lspconfig = {
 	ensure_installed = { "clangd", "pyright", "lua_ls" },
 	handlers = {
 		lsp_zero.default_setup,
 	},
-})
+}
+mason_lspconfig.handlers["rust_analyzer"] = function() end
+
+require("mason-lspconfig").setup(mason_lspconfig)
 
 vim.keymap.set("n", "<Leader>pch", "<cmd>ClangdSwitchSourceHeader<cr>")
 
@@ -83,21 +86,15 @@ local lsp_signature_config = {
 	floating_window = false,
 }
 require("lsp_signature").setup(lsp_signature_config)
-vim.keymap.set({ "i" }, "<C-k>", function()
-	require("lsp_signature").toggle_float_win()
-end, { silent = true, noremap = true, desc = "toggle signature" })
-
 -- ##############################SIGNATURE##############################
 
 -- ##############################Harpoon##############################
 local harpoon = require("harpoon")
-
--- REQUIRED
 harpoon:setup()
 -- REQUIRED
 
 vim.keymap.set("n", "<leader>ha", function()
-	harpoon:list():append()
+	harpoon:list():add()
 end)
 vim.keymap.set("n", "<leader>hl", function()
 	harpoon.ui:toggle_quick_menu(harpoon:list())
@@ -114,5 +111,8 @@ vim.keymap.set("n", "<leader>h3", function()
 end)
 vim.keymap.set("n", "<leader>h4", function()
 	harpoon:list():select(4)
+end)
+vim.keymap.set("n", "<leader>h5", function()
+	harpoon:list():select(5)
 end)
 -- ##############################Harpoon################################
