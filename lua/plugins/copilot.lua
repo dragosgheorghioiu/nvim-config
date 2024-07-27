@@ -3,7 +3,6 @@ return {
 	build = ":Copilot setup",
 	config = function()
 		vim.api.nvim_create_user_command("CopilotToggle", function()
-			vim.g.copilot_enabled = not vim.g.copilot_enabled
 			if vim.g.copilot_enabled then
 				vim.cmd("Copilot disable")
 				print("Copilot OFF")
@@ -13,5 +12,7 @@ return {
 			end
 		end, { nargs = 0 })
 		vim.keymap.set("", "<leader>gct", ":CopilotToggle<CR>", { noremap = true, silent = true })
+		-- disable by default
+		vim.g.copilot_enabled = false
 	end,
 }

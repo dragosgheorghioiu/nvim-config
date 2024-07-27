@@ -38,7 +38,7 @@ lspconfig.lua_ls.setup({
 	settings = {
 		Lua = {
 			diagnostics = {
-				globals = { "vim" },
+				globals = { "vim", "awesome" },
 			},
 		},
 	},
@@ -116,3 +116,8 @@ vim.keymap.set("n", "<leader>h5", function()
 	harpoon:list():select(5)
 end)
 -- ##############################Harpoon################################
+-- ##############################Hologram################################
+require("hologram").setup({
+	auto_display = true,
+})
+-- ##############################Hologram################################

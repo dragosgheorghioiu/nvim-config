@@ -15,6 +15,7 @@ local M = {
 			vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts)
 			vim.keymap.set("n", "<space>wa", vim.lsp.buf.add_workspace_folder, opts)
 			vim.keymap.set("n", "<space>wr", vim.lsp.buf.remove_workspace_folder, opts)
+			vim.keymap.set("n", "<space>ld", vim.diagnostic.open_float, opts)
 			vim.keymap.set("n", "<space>wl", function()
 				print(vim.inspect(vim.lsp.buf.list_workspace_folders()))
 			end, opts)
