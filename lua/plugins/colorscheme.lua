@@ -30,17 +30,17 @@ return {
 	-- end,
 
 	-- [[ Sonokai ]]
-	"sainnhe/sonokai",
-	lazy = false,
-	priority = 1000,
-	config = function()
-		vim.cmd([[ let g:sonokai_diagnostic_text_highlight = 1 ]])
-		vim.cmd([[ let g:sonokai_diagnostic_line_highlight = 1 ]])
-		vim.cmd([[ let g:sonokai_style = 'atlantis' ]])
-		-- vim.cmd([[ let g:sonokai_better_performance = 1 ]])
-		vim.cmd([[ let g:sonokai_transparent_background = 1 ]])
-		vim.cmd([[ colorscheme sonokai ]])
-	end,
+	-- "sainnhe/sonokai",
+	-- lazy = false,
+	-- priority = 1000,
+	-- config = function()
+	-- 	vim.cmd([[ let g:sonokai_diagnostic_text_highlight = 1 ]])
+	-- 	vim.cmd([[ let g:sonokai_diagnostic_line_highlight = 1 ]])
+	-- 	vim.cmd([[ let g:sonokai_style = 'atlantis' ]])
+	-- 	-- vim.cmd([[ let g:sonokai_better_performance = 1 ]])
+	-- 	vim.cmd([[ let g:sonokai_transparent_background = 1 ]])
+	-- 	vim.cmd([[ colorscheme sonokai ]])
+	-- end,
 
 	-- [[ Everforest ]]
 	-- "sainnhe/everforest",
@@ -51,4 +51,17 @@ return {
 	-- 	vim.cmd([[ let g:everforest_transparent_background = 1 ]])
 	-- 	vim.cmd([[ colorscheme everforest ]])
 	-- end,
+
+	-- [[ Rose Pine ]]
+	"rose-pine/neovim",
+	lazy = false,
+	priority = 1000,
+	config = function()
+		require("rose-pine").setup({
+			styles = {
+				transparency = true,
+			},
+		})
+		vim.cmd("colorscheme rose-pine")
+	end,
 }
