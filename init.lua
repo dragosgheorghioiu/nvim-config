@@ -63,7 +63,7 @@ cmp.setup({
 
 require("mason").setup({})
 local mason_lspconfig = {
-	ensure_installed = { "clangd", "pyright", "lua_ls" },
+	ensure_installed = { "clangd", "pyright", "lua_ls", "gopls", "eslint", "templ", "html", "htmx" },
 	handlers = {
 		lsp_zero.default_setup,
 	},
