@@ -91,6 +91,8 @@ lspconfig.html.setup({
 	},
 })
 
+lspconfig.htmx.setup({})
+
 lspconfig.tsserver.setup({
 	cmd = { "typescript-language-server", "--stdio" },
 	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
