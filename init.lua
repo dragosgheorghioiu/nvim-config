@@ -61,16 +61,72 @@ cmp.setup({
 	},
 })
 
-require("mason").setup({})
-local mason_lspconfig = {
-	ensure_installed = { "clangd", "pyright", "lua_ls", "gopls", "eslint", "templ", "html", "htmx" },
-	handlers = {
-		lsp_zero.default_setup,
-	},
-}
-mason_lspconfig.handlers["rust_analyzer"] = function() end
+-- LSP setup for gopls
+local lspconfig = require("lspconfig")
 
-require("mason-lspconfig").setup(mason_lspconfig)
+-- Enable gopls language server
+lspconfig.gopls.setup({
+	cmd = { "gopls" },
+	filetypes = { "go", "gomod" },
+	root_dir = lspconfig.util.root_pattern("go.work", "go.mod", ".git"),
+	settings = {
+		gopls = {
+			analyses = {
+				unusedparams = true,
+			},
+			staticcheck = true,
+		},
+	},
+})
+
+lspconfig.html.setup({
+	cmd = { "vscode-html-language-server", "--stdio" },
+	filetypes = { "html" },
+	init_options = {
+		configurationSection = { "html", "css", "javascript" },
+		embeddedLanguages = {
+			css = true,
+			javascript = true,
+		},
+	},
+})
+
+lspconfig.tsserver.setup({
+	cmd = { "typescript-language-server", "--stdio" },
+	filetypes = { "javascript", "javascriptreact", "typescript", "typescriptreact" },
+	root_dir = lspconfig.util.root_pattern("package.json", "tsconfig.json", "jsconfig.json", ".git"),
+})
+
+lspconfig.tailwindcss.setup({
+	cmd = { "tailwindcss-language-server", "--stdio" },
+	filetypes = { "html", "css", "javascript", "javascriptreact", "typescript", "typescriptreact", "svelte", "vue" },
+	init_options = {
+		userLanguages = {
+			html = "html",
+			css = "css",
+			javascript = "javascript",
+			javascriptreact = "javascriptreact",
+			typescript = "typescript",
+			typescriptreact = "typescriptreact",
+			svelte = "svelte",
+			vue = "vue",
+		},
+	},
+	root_dir = lspconfig.util.root_pattern(
+		"tailwind.config.js",
+		"tailwind.config.ts",
+		"postcss.config.js",
+		"postcss.config.ts",
+		"package.json",
+		".git"
+	),
+})
+
+lspconfig.pyright.setup({
+	cmd = { "pyright-langserver", "--stdio" },
+	filetypes = { "python" },
+	root_dir = lspconfig.util.root_pattern("pyproject.toml", "setup.py", "requirements.txt", ".git"),
+})
 
 vim.keymap.set("n", "<Leader>pch", "<cmd>ClangdSwitchSourceHeader<cr>")
 
