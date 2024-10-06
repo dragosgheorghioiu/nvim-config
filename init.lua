@@ -10,6 +10,12 @@ vimset.conceallevel = 2
 vimset.clipboard = "unnamedplus"
 vimset.termguicolors = true
 
+-- clear highlights when pressing escape in normal mode
+vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>")
+
+-- create alias for :W to be :wa
+vim.api.nvim_create_user_command("W", "wall", {})
+
 local lazypath = vim.fn.stdpath("data") .. "/lazy/lazy.nvim"
 if not vim.loop.fs_stat(lazypath) then
 	vim.fn.system({
@@ -45,9 +51,8 @@ lspconfig.lua_ls.setup({
 })
 
 -- clangd fix
-local cmp_nvim_lsp = require("cmp_nvim_lsp")
 require("lspconfig").clangd.setup({
-	capabilities = cmp_nvim_lsp.default_capabilities(),
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 	cmd = {
 		"clangd",
 		"--offset-encoding=utf-16",
@@ -63,7 +68,7 @@ cmp.setup({
 
 require("mason").setup({})
 local mason_lspconfig = {
-	ensure_installed = { "clangd", "pyright", "lua_ls", "gopls", "eslint", "templ", "html", "htmx" },
+	ensure_installed = { "clangd", "pyright", "lua_ls", "gopls", "eslint", "html", "htmx" },
 	handlers = {
 		lsp_zero.default_setup,
 	},
@@ -75,20 +80,18 @@ require("mason-lspconfig").setup(mason_lspconfig)
 vim.keymap.set("n", "<Leader>pch", "<cmd>ClangdSwitchSourceHeader<cr>")
 
 require("autocommand")
-require("nvim-autopairs").setup({})
 require("formatter-nvim")
 require("oil").setup({})
 vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
 
 -- ##############################SIGNATURE##############################
-local lsp_signature_config = {
+require("lsp_signature").setup({
 	hint_prefix = "-> ",
 	floating_window = false,
-}
-require("lsp_signature").setup(lsp_signature_config)
+})
 -- ##############################SIGNATURE##############################
 
--- ##############################Harpoon##############################
+-- ##############################HARPOON##############################
 local harpoon = require("harpoon")
 harpoon:setup()
 -- REQUIRED
@@ -115,9 +118,4 @@ end)
 vim.keymap.set("n", "<leader>h5", function()
 	harpoon:list():select(5)
 end)
--- ##############################Harpoon################################
--- ##############################Hologram################################
-require("hologram").setup({
-	auto_display = true,
-})
--- ##############################Hologram################################
+-- ##############################HARPOON################################
