@@ -1,4 +1,3 @@
--- ################### FORMATTER ###############################
 -- Utilities for creating configurations
 local util = require("formatter.util")
 
@@ -66,6 +65,4 @@ autocmd("BufWritePost", {
 	group = "__formatter__",
 	command = ":FormatWrite",
 })
--- ####################################################################
-
 return M

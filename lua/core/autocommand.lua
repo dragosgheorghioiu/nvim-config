@@ -26,6 +26,23 @@ local M = {
 			vim.keymap.set("n", "<space>f", function()
 				vim.lsp.buf.format({ async = true })
 			end, opts)
+			vim.api.nvim_create_autocmd("LspDetach", {
+				group = vim.api.nvim_create_augroup("kickstart-lsp-detach", { clear = true }),
+				callback = function(event2)
+					vim.lsp.buf.clear_references()
+					vim.api.nvim_clear_autocmds({ group = "kickstart-lsp-highlight", buffer = event2.buf })
+				end,
+			})
+		end,
+	}),
+	-- Highlight when yanking (copying) text
+	--  Try it with `yap` in normal mode
+	--  See `:help vim.highlight.on_yank()`
+	vim.api.nvim_create_autocmd("TextYankPost", {
+		desc = "Highlight when yanking (copying) text",
+		group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+		callback = function()
+			vim.highlight.on_yank()
 		end,
 	}),
 }
