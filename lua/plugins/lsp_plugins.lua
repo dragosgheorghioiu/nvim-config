@@ -37,6 +37,7 @@ return {
 				},
 				gopls = {},
 				pyright = {},
+				hls = {},
 				ts_ls = {},
 				lua_ls = {
 					-- cmd = {...},
