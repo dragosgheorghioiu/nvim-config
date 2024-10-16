@@ -37,7 +37,6 @@ return {
 				},
 				gopls = {},
 				pyright = {},
-				hls = {},
 				ts_ls = {},
 				lua_ls = {
 					-- cmd = {...},
@@ -63,6 +62,17 @@ return {
 			--  You can press `g?` for help in this menu.
 			require("mason").setup()
 
+			-- Override theme borders for open windows
+			vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
+			vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+
+			local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+			function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
+				opts = opts or {}
+				opts["border"] = opts.border or "rounded"
+				return orig_util_open_floating_preview(contents, syntax, opts, ...)
+			end
+
 			-- You can add other tools here that you want Mason to install
 			-- for you, so that they are available from within Neovim.
 			local ensure_installed = vim.tbl_keys(servers or {})
@@ -86,6 +96,10 @@ return {
 					end,
 				},
 			})
+
+			-- add non mason LSPs
+			-- haskell language server
+			require("lspconfig").hls.setup({})
 		end,
 	},
 }

@@ -46,7 +46,12 @@ local M = require("formatter").setup({
 				}
 			end,
 		},
-
+		typescript = {
+			require("formatter.filetypes.typescript").prettier,
+		},
+		typescriptreact = {
+			require("formatter.filetypes.typescriptreact").prettier,
+		},
 		yaml = {
 			require("formatter.filetypes.yaml").yamlfmt,
 		},
