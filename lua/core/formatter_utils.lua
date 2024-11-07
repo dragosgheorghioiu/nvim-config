@@ -19,6 +19,9 @@ local M = require("formatter").setup({
 		haskell = {
 			require("formatter.filetypes.haskell").ormolu,
 		},
+		sh = {
+			require("formatter.filetypes.sh").shfmt(),
+		},
 		lua = {
 			-- "formatter.filetypes.lua" defines default configurations for the
 			-- "lua" filetype
