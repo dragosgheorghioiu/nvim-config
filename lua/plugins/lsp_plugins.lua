@@ -60,7 +60,11 @@ return {
 			--    :Mason
 			--
 			--  You can press `g?` for help in this menu.
-			require("mason").setup()
+			require("mason").setup({
+				ui = {
+					border = "rounded",
+				},
+			})
 
 			-- Override theme borders for open windows
 			vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
