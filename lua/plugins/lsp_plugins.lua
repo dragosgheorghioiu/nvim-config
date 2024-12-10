@@ -88,6 +88,10 @@ return {
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
+		require("lspconfig")["hls"].setup({
+			filetypes = { "haskell", "lhaskell", "cabal" },
+      cmd = { "haskell-language-server-9.2.8", "--lsp"}
+		})
 			require("mason-lspconfig").setup({
 				handlers = {
 					function(server_name)
@@ -100,10 +104,7 @@ return {
 					end,
 				},
 			})
-
-			-- add non mason LSPs
-			-- haskell language server
-			require("lspconfig").hls.setup({})
 		end,
+
 	},
 }
