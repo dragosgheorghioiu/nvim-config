@@ -3,7 +3,7 @@ return {
 	build = ":TSUpdate",
 	main = "nvim-treesitter.configs",
 	opts = {
-		auto_install = true,
+		auto_install = false,
 		highlight = {
 			enable = true,
 			additional_vim_regex_highlighting = { "ruby" },
