@@ -1,3 +1,12 @@
+function toggle_quickfix()
+	for _, win in ipairs(vim.fn.getwininfo()) do
+		if win.quickfix == 1 then
+			vim.cmd("cclose")
+		else
+			vim.cmd("copen")
+		end
+	end
+end
 local M = {
 	-- clear highlights when pressing escape in normal mode
 	vim.keymap.set("n", "<Esc>", "<cmd>nohlsearch<CR>"),
@@ -8,7 +17,7 @@ local M = {
 	-- Quickfix list keymaps
 	vim.keymap.set("n", "<C-M-J>", "<cmd>cnext<cr>"),
 	vim.keymap.set("n", "<C-M-K>", "<cmd>cprevious<cr>"),
-	vim.keymap.set("n", "<C-M-O>", "<cmd>copen<cr>"),
-	vim.keymap.set("n", "<C-M-P>", "<cmd>cclose<cr>"),
+
+	vim.keymap.set("n", "<C-M-O>", "<cmd>lua toggle_quickfix()<cr>"),
 }
 return M
