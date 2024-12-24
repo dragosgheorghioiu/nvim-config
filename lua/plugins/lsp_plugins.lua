@@ -67,10 +67,11 @@ return {
 			})
 
 			-- Override theme borders for open windows
-			vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1f2335]])
-			vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1f2335]])
+			vim.cmd([[autocmd! ColorScheme * highlight NormalFloat guibg=#1c1625]])
+			vim.cmd([[autocmd! ColorScheme * highlight FloatBorder guifg=white guibg=#1c1625]])
 
 			local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
+			---@diagnostic disable-next-line: duplicate-set-field
 			function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
 				opts = opts or {}
 				opts["border"] = opts.border or "rounded"
@@ -88,10 +89,10 @@ return {
 			})
 			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
 
-		require("lspconfig")["hls"].setup({
-			filetypes = { "haskell", "lhaskell", "cabal" },
-      cmd = { "haskell-language-server-9.2.8", "--lsp"}
-		})
+			require("lspconfig")["hls"].setup({
+				filetypes = { "haskell", "lhaskell", "cabal" },
+				cmd = { "haskell-language-server-9.2.8", "--lsp" },
+			})
 			require("mason-lspconfig").setup({
 				handlers = {
 					function(server_name)
@@ -105,6 +106,5 @@ return {
 				},
 			})
 		end,
-
 	},
 }

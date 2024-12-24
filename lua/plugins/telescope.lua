@@ -3,6 +3,20 @@ return {
 	tag = "0.1.5",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
+		require("telescope").setup({
+			pickers = {
+				find_files = {
+					theme = "ivy",
+				},
+				live_grep = {
+					theme = "ivy",
+				},
+				lsp_document_symbols = {
+					theme = "ivy",
+				},
+			},
+		})
+
 		local teles = require("telescope.builtin")
 
 		vim.api.nvim_set_keymap("n", "<leader>phf", "<cmd>lua ToggleTelescopeSearch()<CR>", { noremap = true })
@@ -22,6 +36,5 @@ return {
 		end, {})
 		vim.keymap.set("n", "<leader>ps", teles.live_grep, {})
 		vim.keymap.set("n", "<leader>pe", teles.diagnostics, {})
-		vim.keymap.set("n", "<leader>bs", teles.lsp_document_symbols, {})
 	end,
 }
