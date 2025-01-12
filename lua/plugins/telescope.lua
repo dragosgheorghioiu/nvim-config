@@ -3,19 +3,7 @@ return {
 	tag = "0.1.5",
 	dependencies = { "nvim-lua/plenary.nvim" },
 	config = function()
-		require("telescope").setup({
-			pickers = {
-				find_files = {
-					theme = "ivy",
-				},
-				live_grep = {
-					theme = "ivy",
-				},
-				lsp_document_symbols = {
-					theme = "ivy",
-				},
-			},
-		})
+		require("telescope").setup({})
 
 		local teles = require("telescope.builtin")
 
