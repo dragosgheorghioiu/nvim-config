@@ -19,5 +19,10 @@ local M = {
 	vim.keymap.set("n", "<C-M-K>", "<cmd>cprevious<cr>"),
 
 	vim.keymap.set("n", "<C-M-O>", "<cmd>lua toggle_quickfix()<cr>"),
+
+	vim.keymap.set("n", "<Leader>bn", "<cmd>bnext<cr>"),
+	vim.keymap.set("n", "<Leader>bp", "<cmd>bprevious<cr>"),
+	vim.keymap.set("n", "<Leader>bd", "<cmd>bdelete<cr>"),
+	vim.keymap.set("n", "<Leader>bs", "<cmd>buffers<cr>"),
 }
 return M
