@@ -1,41 +1,39 @@
 local M = {
-	vim.api.nvim_create_autocmd("LspAttach", {
-		group = vim.api.nvim_create_augroup("UserLspConfig", {}),
-		callback = function(ev)
-			vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+  vim.api.nvim_create_autocmd("LspAttach", {
+    group = vim.api.nvim_create_augroup("UserLspConfig", {}),
+    callback = function(ev)
+      vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
 
-			local opts = { buffer = ev.buf }
-			vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
-			vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
-			vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
-			vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
-			vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
-			vim.keymap.set("n", "<leader>sh", vim.lsp.buf.signature_help, opts)
-			vim.keymap.set("n", "<space>ld", vim.diagnostic.open_float, opts)
-			vim.keymap.set("n", "<space>D", vim.lsp.buf.type_definition, opts)
-			vim.keymap.set("n", "<space>rn", vim.lsp.buf.rename, opts)
-			vim.keymap.set({ "n", "v" }, "<space>ca", vim.lsp.buf.code_action, opts)
-			vim.keymap.set("n", "<space>f", function()
-				vim.lsp.buf.format({ async = true })
-			end, opts)
+      local opts = { buffer = ev.buf }
+      vim.keymap.set("n", "gD", vim.lsp.buf.declaration, opts)
+      vim.keymap.set("n", "K", vim.lsp.buf.hover, opts)
+      vim.keymap.set("n", "gd", vim.lsp.buf.definition, opts)
+      vim.keymap.set("n", "gr", vim.lsp.buf.references, opts)
+      vim.keymap.set("n", "gi", vim.lsp.buf.implementation, opts)
+      vim.keymap.set("n", "<leader>ld", vim.diagnostic.open_float, opts)
+      vim.keymap.set("n", "<leader>rn", vim.lsp.buf.rename, opts)
+      vim.keymap.set({ "n", "v" }, "<leader>ca", vim.lsp.buf.code_action, opts)
+      vim.keymap.set("n", "<leader>f", function()
+        vim.lsp.buf.format({ async = true })
+      end, opts)
 
-			local lsp_detach_group = vim.api.nvim_create_augroup("lsp-detach", { clear = true })
-			vim.api.nvim_create_autocmd("LspDetach", {
-				group = lsp_detach_group,
-				callback = function()
-					vim.lsp.buf.clear_references()
-				end,
-			})
-		end,
-	}),
+      local lsp_detach_group = vim.api.nvim_create_augroup("lsp-detach", { clear = true })
+      vim.api.nvim_create_autocmd("LspDetach", {
+        group = lsp_detach_group,
+        callback = function()
+          vim.lsp.buf.clear_references()
+        end,
+      })
+    end,
+  }),
 
-	vim.api.nvim_create_autocmd("TextYankPost", {
-		desc = "Highlight when yanking (copying) text",
-		group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-		callback = function()
-			vim.highlight.on_yank()
-		end,
-	}),
+  vim.api.nvim_create_autocmd("TextYankPost", {
+    desc = "Highlight when yanking (copying) text",
+    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
+    callback = function()
+      vim.highlight.on_yank()
+    end,
+  }),
 }
 
 return M

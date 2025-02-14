@@ -16,10 +16,10 @@ local M = {
 	-- Oil remap
 	vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" }),
 	-- Quickfix list keymaps
-	vim.keymap.set("n", "<Leader>qn", "<cmd>cnext<cr>"),
-	vim.keymap.set("n", "<Leader>qp", "<cmd>cprevious<cr>"),
+	vim.keymap.set("n", "<m-c-j>", "<cmd>cnext<cr>"),
+	vim.keymap.set("n", "<m-c-k>", "<cmd>cprevious<cr>"),
 
-	vim.keymap.set("n", "<Leader>ql", "<cmd>lua toggle_quickfix()<cr>"),
+	vim.keymap.set("n", "<Leader>qt", "<cmd>lua toggle_quickfix()<cr>"),
 
   -- Buffer commands
 	vim.keymap.set("n", "<Leader>bn", "<cmd>bnext<cr>"),
