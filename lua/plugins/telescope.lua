@@ -24,5 +24,6 @@ return {
 		end, {})
 		vim.keymap.set("n", "<leader>ps", teles.live_grep, {})
 		vim.keymap.set("n", "<leader>pe", teles.diagnostics, {})
+		vim.keymap.set("n", "<leader>pb", teles.buffers, {})
 	end,
 }
