@@ -78,16 +78,7 @@ return {
 				return orig_util_open_floating_preview(contents, syntax, opts, ...)
 			end
 
-			-- You can add other tools here that you want Mason to install
-			-- for you, so that they are available from within Neovim.
-			local ensure_installed = vim.tbl_keys(servers or {})
-			vim.list_extend(ensure_installed, {
-				"stylua", -- Used to format Lua code
-				"pyright",
-				"clangd",
-				"ts_ls",
-			})
-			require("mason-tool-installer").setup({ ensure_installed = ensure_installed })
+			require("mason-tool-installer").setup({})
 
 			require("lspconfig")["hls"].setup({
 				filetypes = { "haskell", "lhaskell", "cabal" },

@@ -20,8 +20,11 @@ vim.opt.splitbelow = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- Decrease update time
-vim.opt.updatetime = 250
+-- Netrw options
+vim.g.netrw_banner = 0
+vim.g.netrw_keepdir = 0
+vim.g.netrw_localcopydircmd = 'cp -r'
+vim.g.netrw_banner = 0
 
 -- Minimal number of screen lines to keep above and below the cursor.
 vim.opt.scrolloff = 10
