@@ -16,6 +16,15 @@ local M = {
       vim.keymap.set("n", "<leader>f", function()
         vim.lsp.buf.format({ async = true })
       end, opts)
+      vim.keymap.set("n", "<leader>dt", function()
+        local config = vim.diagnostic.config
+        local vt = config().virtual_text
+        config {
+          virtual_text = not vt,
+          underline = not vt,
+          signs = not vt,
+        }
+      end, { desc = "toggle diagnostic" })
 
       local lsp_detach_group = vim.api.nvim_create_augroup("lsp-detach", { clear = true })
       vim.api.nvim_create_autocmd("LspDetach", {

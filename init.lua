@@ -11,6 +11,7 @@ vim.opt.conceallevel = 2
 vim.opt.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
+vim.opt.showmode = false
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
@@ -20,14 +21,8 @@ vim.opt.splitbelow = true
 vim.opt.ignorecase = true
 vim.opt.smartcase = true
 
--- Netrw options
-vim.g.netrw_banner = 0
-vim.g.netrw_keepdir = 0
-vim.g.netrw_localcopydircmd = 'cp -r'
-vim.g.netrw_banner = 0
-
 -- Minimal number of screen lines to keep above and below the cursor.
-vim.opt.scrolloff = 10
+vim.opt.scrolloff = 15
 
 -- ##################################DEFAULT_SETTINGS##################################
 
