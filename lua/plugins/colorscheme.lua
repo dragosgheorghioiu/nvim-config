@@ -58,16 +58,28 @@ return {
 	-- },
 
 	-- [[ Rose Pine ]]
-	"rose-pine/neovim",
+	-- "rose-pine/neovim",
+	-- lazy = false,
+	-- priority = 1000,
+	-- config = function()
+	-- 	require("rose-pine").setup({
+	-- 		styles = {
+	-- 			italic = false,
+	--        transparency = true,
+	-- 		},
+	-- 	})
+	-- 	vim.cmd("colorscheme rose-pine-moon")
+	-- end,
+
+  'tanvirtin/monokai.nvim',
 	lazy = false,
 	priority = 1000,
-	config = function()
-		require("rose-pine").setup({
-			styles = {
-				italic = false,
-        transparency = true,
-			},
-		})
-		vim.cmd("colorscheme rose-pine-moon")
-	end,
+  config = function()
+    local custom_theme = require('monokai').pro
+    custom_theme.base0 = '#282a3a'
+    custom_theme.base1 = '#282a3a'
+    custom_theme.base2 = '#282a3a'
+    custom_theme.base3 = '#282a3a'
+    require('monokai').setup { palette = custom_theme }
+  end
 }
