@@ -32,5 +32,12 @@ local M = {
 	vim.keymap.set("n", "<c-j>", "<cmd>wincmd j<cr>"),
 	vim.keymap.set("n", "<c-l>", "<cmd>wincmd l<cr>"),
 	vim.keymap.set("n", "<c-h>", "<cmd>wincmd h<cr>"),
+
+  vim.keymap.set("n", "<Leader>st", function ()
+    vim.cmd.vnew()
+    vim.cmd.term()
+    vim.cmd.wincmd("J")
+    vim.api.nvim_win_set_height(0, 5)
+  end)
 }
 return M
