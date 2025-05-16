@@ -46,8 +46,9 @@ local function toggle_floating_term()
     if not vim.api.nvim_win_is_valid(state.win) then
       state = open_floating_term(state)
       if vim.bo[state.buf].buftype ~= 'terminal' then
-        vim.cmd.term()
+        vim.cmd('terminal')
       end
+      vim.cmd('startinsert')
     else
       vim.api.nvim_win_hide(state.win)
     end
