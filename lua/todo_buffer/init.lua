@@ -1,6 +1,6 @@
 local M = {}
 local function expand_path(path)
-  if path:sub(1, 1) == "~" then 
+  if path:sub(1, 1) == "~" then
     return os.getenv("HOME") .. path:sub(2)
   end
   return path
@@ -40,18 +40,18 @@ local function open_floating_file(target_file)
 
   vim.bo[buf].swapfile = false
 
-  local win = vim.api.nvim_open_win(buf, true, win_config())
+  vim.api.nvim_open_win(buf, true, win_config())
 end
 
 local function setup_user_commnads(opts)
   local target_file = opts.target_file or "todo.md"
-  vim.api.nvim_create_user_command("Td", function ()
+  vim.api.nvim_create_user_command("Td", function()
     open_floating_file(target_file)
   end, {})
 end
 
-M.setup = function (opts)
-  setup_user_commnads(opts) 
+M.setup = function(opts)
+  setup_user_commnads(opts)
 end
 
 return M
