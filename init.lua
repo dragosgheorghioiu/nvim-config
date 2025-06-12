@@ -12,6 +12,7 @@ vim.opt.clipboard = "unnamedplus"
 vim.opt.termguicolors = true
 vim.opt.signcolumn = "yes"
 vim.opt.showmode = true
+vim.g.loaded_netrwPlugin = 1
 
 -- Configure how new splits should be opened
 vim.opt.splitright = true
