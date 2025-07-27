@@ -1,8 +1,21 @@
-local M = {
-  vim.api.nvim_create_autocmd("LspAttach", {
+-- highlight on yank
+vim.api.nvim_create_autocmd("TextYankPost", {
+  desc = "Highlight when yanking (copying) text",
+  group = vim.api.nvim_create_augroup("yank-highlight", { clear = true }),
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+})
+
+-- lsp autocommands
+vim.api.nvim_create_autocmd("LspAttach", {
     group = vim.api.nvim_create_augroup("UserLspConfig", {}),
     callback = function(ev)
       vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+      local client = vim.lsp.get_client_by_id(ev.data.client_id)
+      if client:supports_method('textDocument/completion') then
+        vim.lsp.completion.enable(true, client.id, ev.buf, { autotrigger = true } )
+      end
 
       local opts = { buffer = ev.buf }
       vim.keymap.set("n", "<leader>f", function()
@@ -17,15 +30,4 @@ local M = {
         end,
       })
     end,
-  }),
-
-  vim.api.nvim_create_autocmd("TextYankPost", {
-    desc = "Highlight when yanking (copying) text",
-    group = vim.api.nvim_create_augroup("kickstart-highlight-yank", { clear = true }),
-    callback = function()
-      vim.highlight.on_yank()
-    end,
-  }),
-}
-
-return M
+  })
