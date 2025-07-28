@@ -11,23 +11,25 @@ local function ensure_plugin_dir()
   return plugin_path
 end
 
+-- TODO: should open a floating window with the details
+-- TODO: should have a build feature for plugins like blink
 local function install_plugin(repo_url, plugin_name)
   local plugin_dir = ensure_plugin_dir()
   local install_path = plugin_dir .. plugin_name
 
   if vim.fn.isdirectory(install_path) == 1 then
-    print("Plugin '" .. plugin_name .. "' already exists")
+    vim.notify("Plugin '" .. plugin_name .. "' already exists")
     return
   end
 
   local cmd = 'git clone "' .. repo_url .. '" "' .. install_path .. '"'
-  print("Installing " .. plugin_name .. "...")
+  vim.notify("Installing " .. plugin_name .. "...")
 
   local result = os.execute(cmd)
   if result then
-    print("Successfully installed: " .. plugin_name)
+    vim.notify("Successfully installed: " .. plugin_name)
   else
-    print("Failed to install: " .. plugin_name)
+    vim.notify("Failed to install: " .. plugin_name)
   end
 end
 
@@ -36,11 +38,11 @@ local function update_plugins()
 
   local handle = vim.loop.fs_scandir(plugin_dir)
   if not handle then
-    print("No plugins found in directory: " .. plugin_dir)
+    vim.notify("No plugins found in directory: " .. plugin_dir)
     return
   end
 
-  print("Updating plugins...")
+  vim.notify("Updating plugins...")
   while true do
     local name, type = vim.loop.fs_scandir_next(handle)
     if not name then break end
@@ -49,16 +51,16 @@ local function update_plugins()
       local plugin_path = plugin_dir .. name
       local git_dir = plugin_path .. "/.git"
       if vim.fn.isdirectory(git_dir) == 1 then
-        print("Updating " .. name .. "...")
+        vim.notify("Updating " .. name .. "...")
         local cmd = 'git -C "' .. plugin_path .. '" pull'
         local result = os.execute(cmd)
         if result then
-          print("Successfully updated: " .. name)
+          vim.notify("Successfully updated: " .. name)
         else
-          print("Failed to update: " .. name)
+          vim.notify("Failed to update: " .. name)
         end
       else
-        print("Skipping " .. name .. ": Not a Git repository")
+        vim.notify("Skipping " .. name .. ": Not a Git repository")
       end
     end
   end
@@ -81,9 +83,21 @@ end, {
 
 
 local function setup_plugins()
-  for _, v in pairs(plugins_list) do
-    if v['callback'] ~= nil then
-      v.callback(v.opts)
+  local plugin_dir = get_plugin_path()
+  local plugin_dir_stat = vim.loop.fs_stat(plugin_dir)
+  if plugin_dir_stat == nil then
+    vim.notify("Could not find plugins dir. Should run :PluginInstall")
+    return
+  end
+
+  for plugin_name, plugin_opts in pairs(plugins_list) do
+    local install_path = plugin_dir .. plugin_name
+    local stat = vim.loop.fs_stat(install_path)
+
+    if stat == nil then
+      vim.notify("Could not find plugin: " .. plugin_name)
+    elseif plugin_opts.callback then
+      plugin_opts.callback(plugin_opts.opts)
     end
   end
 end
