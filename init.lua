@@ -1,5 +1,4 @@
 vim.g.mapleader = " "
-vim.g.loaded_netrwPlugin = 1
 
 vim.o.tabstop = 2
 vim.o.expandtab = true
@@ -7,7 +6,6 @@ vim.o.softtabstop = 2
 vim.o.shiftwidth = 2
 vim.o.number = true
 vim.o.relativenumber = true
-vim.o.conceallevel = 2
 vim.o.clipboard = "unnamedplus"
 vim.o.termguicolors = true
 vim.o.signcolumn = "yes"
@@ -20,7 +18,7 @@ vim.o.guicursor = "n-i-v-c:block"
 vim.o.winborder = 'rounded'
 
 -- stop highlights
-vim.keymap.set("n", "<Esc>", ":nohl<CR>")
+vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })
 
 -- autocommands configs
 require("autocommands")
@@ -29,5 +27,4 @@ require("autocommands")
 require("plugins").setup()
 
 -- completions
-vim.opt.completeopt = { "menu", "menuone", "noselect" }
-
+vim.opt.completeopt = { "menu", "menuone", "noselect", "popup" }
