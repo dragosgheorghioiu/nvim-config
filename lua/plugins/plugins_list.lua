@@ -36,6 +36,7 @@ return {
   -- blink cmp
   blink_cmp = {
     url = "https://github.com/Saghen/blink.cmp",
+    build = "cargo build --release",
     opts = {
       completion = {
         menu = { border = 'none' },

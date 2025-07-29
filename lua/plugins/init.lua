@@ -1,4 +1,15 @@
 local plugins_list = require("plugins.plugins_list")
+local plugin_log = require("plugins.plugin_log")
+
+local done = 0
+local total = 0
+
+local function set_total_plugins()
+  for _ in pairs(plugins_list) do
+    total = total + 1
+  end
+  plugin_log.update_progress(done, total)
+end
 
 local function get_plugin_path()
   local data_path = vim.fn.stdpath('data')
@@ -11,26 +22,60 @@ local function ensure_plugin_dir()
   return plugin_path
 end
 
--- TODO: should open a floating window with the details
--- TODO: should have a build feature for plugins like blink
-local function install_plugin(repo_url, plugin_name)
+local function install_plugin(plugin_details, plugin_name)
   local plugin_dir = ensure_plugin_dir()
   local install_path = plugin_dir .. plugin_name
 
   if vim.fn.isdirectory(install_path) == 1 then
-    vim.notify("Plugin '" .. plugin_name .. "' already exists")
+    vim.schedule(function()
+      done = done + 1
+      plugin_log.update_progress(done, total)
+      plugin_log.log("Plugin '" .. plugin_name .. "' already exists")
+    end)
     return
   end
 
-  local cmd = 'git clone "' .. repo_url .. '" "' .. install_path .. '"'
-  vim.notify("Installing " .. plugin_name .. "...")
+  vim.schedule(function()
+    plugin_log.log("Installing " .. plugin_name .. "...")
+  end)
 
-  local result = os.execute(cmd)
-  if result then
-    vim.notify("Successfully installed: " .. plugin_name)
-  else
-    vim.notify("Failed to install: " .. plugin_name)
-  end
+  local clone_cmd = { "git", "clone", plugin_details.url, install_path }
+  vim.system(clone_cmd, {}, function(clone_result)
+    vim.schedule(function()
+      if clone_result.code == 0 then
+        plugin_log.log("Successfully installed: " .. plugin_name)
+
+        if plugin_details.build then
+          vim.schedule(function()
+            plugin_log.log("Building " .. plugin_name .. "...")
+          end)
+          local build_cmd = vim.fn.split(plugin_details.build, " ")
+          vim.system(build_cmd, { cwd = install_path }, function(build_result)
+            vim.schedule(function()
+              if build_result.code == 0 then
+                done = done + 1
+                plugin_log.update_progress(done, total)
+                plugin_log.log("Successfully built: " .. plugin_name)
+              else
+                plugin_log.log("Build failed: " .. plugin_name)
+                if build_result.stderr then
+                  plugin_log.log(build_result.stderr)
+                end
+              end
+            end)
+          end)
+        else
+          done = done + 1
+          plugin_log.update_progress(done, total)
+        end
+      else
+        plugin_log.log("Failed to install: " .. plugin_name)
+        if clone_result.stderr then
+          plugin_log.log(clone_result.stderr)
+        end
+      end
+    end)
+  end)
 end
 
 local function update_plugins()
@@ -68,8 +113,9 @@ end
 
 
 vim.api.nvim_create_user_command('PluginInstall', function()
+  set_total_plugins()
   for k, v in pairs(plugins_list) do
-    install_plugin(v.url, k)
+    install_plugin(v, k)
   end
 end, {
   desc = "Installs plugins from the plugins list"
