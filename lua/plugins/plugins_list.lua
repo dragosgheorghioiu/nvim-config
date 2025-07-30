@@ -95,6 +95,7 @@ return {
         rust_analyzer = {},
         ts_ls = {},
         pyright = {},
+        ruff = {},
       }
 
       for server, config in pairs(ensure_installed) do

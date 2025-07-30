@@ -88,6 +88,9 @@ local function update_plugins()
   end
 
   vim.notify("Updating plugins...")
+  done = 0
+  set_total_plugins()
+  plugin_log.update_progress(done, total)
   while true do
     local name, type = vim.loop.fs_scandir_next(handle)
     if not name then break end
@@ -96,16 +99,20 @@ local function update_plugins()
       local plugin_path = plugin_dir .. name
       local git_dir = plugin_path .. "/.git"
       if vim.fn.isdirectory(git_dir) == 1 then
-        vim.notify("Updating " .. name .. "...")
-        local cmd = 'git -C "' .. plugin_path .. '" pull'
-        local result = os.execute(cmd)
-        if result then
-          vim.notify("Successfully updated: " .. name)
-        else
-          vim.notify("Failed to update: " .. name)
-        end
+        plugin_log.log("Updating " .. name .. "...")
+        vim.system({ 'git', 'pull' }, { cwd = plugin_path }, function(update_result)
+          vim.schedule(function()
+            if update_result.code == 0 then
+              done = done + 1
+              plugin_log.update_progress(done, total)
+              plugin_log.log("Successfully updated: " .. name)
+            else
+              plugin_log.log("Failed to update: " .. name)
+            end
+          end)
+        end)
       else
-        vim.notify("Skipping " .. name .. ": Not a Git repository")
+        plugin_log.log("Skipping " .. name .. ": Not a Git repository")
       end
     end
   end
