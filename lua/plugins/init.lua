@@ -79,7 +79,11 @@ local function install_plugin(plugin_details, plugin_name)
 end
 
 local function update_plugins()
-  local plugin_dir = ensure_plugin_dir()
+  local plugin_dir = get_plugin_path()
+  if vim.fn.isdirectory(plugin_dir) == 0 then
+    vim.notify("No plugins installed. Please install them by running :PluginInstall")
+    return
+  end
 
   local handle = vim.loop.fs_scandir(plugin_dir)
   if not handle then
@@ -87,7 +91,6 @@ local function update_plugins()
     return
   end
 
-  vim.notify("Updating plugins...")
   done = 0
   set_total_plugins()
   plugin_log.update_progress(done, total)
@@ -121,6 +124,7 @@ end
 
 vim.api.nvim_create_user_command('PluginInstall', function()
   set_total_plugins()
+  done = 0
   for k, v in pairs(plugins_list) do
     install_plugin(v, k)
   end
