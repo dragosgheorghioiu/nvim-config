@@ -15,8 +15,9 @@ end
 
 function M.log(msg)
   ensure_buf()
+  local lines = vim.split(msg, "\n", { plain = true, trimempty = true })
   local line_count = vim.api.nvim_buf_line_count(bufnr)
-  vim.api.nvim_buf_set_lines(bufnr, line_count, line_count, false, { msg })
+  vim.api.nvim_buf_set_lines(bufnr, line_count, line_count, false, lines)
 end
 
 function M.update_progress(done, total)
@@ -27,4 +28,3 @@ function M.update_progress(done, total)
 end
 
 return M
-

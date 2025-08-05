@@ -5,6 +5,7 @@ local done = 0
 local total = 0
 
 local function set_total_plugins()
+  total = 0
   for _ in pairs(plugins_list) do
     total = total + 1
   end
@@ -22,30 +23,21 @@ local function ensure_plugin_dir()
   return plugin_path
 end
 
-local function install_plugin(plugin_details, plugin_name)
+
+local function run_command_on_plugin_dir(plugin_name, plugin_details, cmd, cwd, run_build_command)
   local plugin_dir = ensure_plugin_dir()
   local install_path = plugin_dir .. plugin_name
-
-  if vim.fn.isdirectory(install_path) == 1 then
-    vim.schedule(function()
-      done = done + 1
-      plugin_log.update_progress(done, total)
-      plugin_log.log("Plugin '" .. plugin_name .. "' already exists")
-    end)
-    return
-  end
 
   vim.schedule(function()
     plugin_log.log("Installing " .. plugin_name .. "...")
   end)
 
-  local clone_cmd = { "git", "clone", plugin_details.url, install_path }
-  vim.system(clone_cmd, {}, function(clone_result)
+  vim.system(cmd, { cwd = cwd }, function(clone_result)
     vim.schedule(function()
       if clone_result.code == 0 then
         plugin_log.log("Successfully installed: " .. plugin_name)
 
-        if plugin_details.build then
+        if run_build_command and plugin_details.build then
           vim.schedule(function()
             plugin_log.log("Building " .. plugin_name .. "...")
           end)
@@ -78,62 +70,45 @@ local function install_plugin(plugin_details, plugin_name)
   end)
 end
 
-local function update_plugins()
-  local plugin_dir = get_plugin_path()
-  if vim.fn.isdirectory(plugin_dir) == 0 then
-    vim.notify("No plugins installed. Please install them by running :PluginInstall")
+local function install_plugin(plugin_name, plugin_details)
+  local plugin_dir = ensure_plugin_dir()
+  local install_path = plugin_dir .. plugin_name
+
+  if vim.fn.isdirectory(install_path) == 1 then
+    vim.schedule(function()
+      done = done + 1
+      plugin_log.update_progress(done, total)
+      plugin_log.log("Plugin '" .. plugin_name .. "' already exists")
+    end)
     return
   end
 
-  local handle = vim.loop.fs_scandir(plugin_dir)
-  if not handle then
-    vim.notify("No plugins found in directory: " .. plugin_dir)
-    return
-  end
-
-  done = 0
-  set_total_plugins()
-  plugin_log.update_progress(done, total)
-  while true do
-    local name, type = vim.loop.fs_scandir_next(handle)
-    if not name then break end
-
-    if type == "directory" then
-      local plugin_path = plugin_dir .. name
-      local git_dir = plugin_path .. "/.git"
-      if vim.fn.isdirectory(git_dir) == 1 then
-        plugin_log.log("Updating " .. name .. "...")
-        vim.system({ 'git', 'pull' }, { cwd = plugin_path }, function(update_result)
-          vim.schedule(function()
-            if update_result.code == 0 then
-              done = done + 1
-              plugin_log.update_progress(done, total)
-              plugin_log.log("Successfully updated: " .. name)
-            else
-              plugin_log.log("Failed to update: " .. name)
-            end
-          end)
-        end)
-      else
-        plugin_log.log("Skipping " .. name .. ": Not a Git repository")
-      end
-    end
-  end
+  local clone_cmd = { "git", "clone", plugin_details.url, install_path }
+  run_command_on_plugin_dir(plugin_name, plugin_details, clone_cmd, plugin_dir, true)
 end
 
+local function update_plugin(plugin_name, plugin_details)
+  local plugin_dir = get_plugin_path() .. plugin_name
+  local pull_cmd = { 'git', 'pull' }
+  run_command_on_plugin_dir(plugin_name, plugin_details, pull_cmd, plugin_dir, true)
+end
 
 vim.api.nvim_create_user_command('PluginInstall', function()
   set_total_plugins()
   done = 0
   for k, v in pairs(plugins_list) do
-    install_plugin(v, k)
+    install_plugin(k, v)
   end
 end, {
   desc = "Installs plugins from the plugins list"
 })
 
 vim.api.nvim_create_user_command('PluginUpdate', function()
-  update_plugins()
+  set_total_plugins()
+  done = 0
+  for k, v in pairs(plugins_list) do
+    update_plugin(k, v)
+  end
 end, {
   desc = "Updates plugins from the plugins list"
 })
