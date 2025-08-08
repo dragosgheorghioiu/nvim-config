@@ -20,6 +20,9 @@ vim.o.winborder = 'rounded'
 -- stop highlights
 vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })
 
+-- fast exit out of term mode
+vim.keymap.set('t', '<Esc><Esc>', "<C-\\><C-n>", { noremap = true })
+
 -- autocommands configs
 require("autocommands")
 
