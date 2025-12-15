@@ -16,6 +16,8 @@ vim.o.smartcase = true
 vim.o.scrolloff = 10
 vim.o.guicursor = "n-i-v-c:block"
 vim.o.winborder = 'rounded'
+vim.o.path = vim.o.path .. ',**,'
+vim.opt.cursorline = true
 
 -- stop highlights
 vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })

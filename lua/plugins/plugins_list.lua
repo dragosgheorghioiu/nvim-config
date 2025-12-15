@@ -16,16 +16,26 @@ return {
   },
 
   -- colorscheme
-  rose_pine = {
-    url = "https://github.com/rose-pine/neovim",
+  -- rose_pine = {
+  --   url = "https://github.com/rose-pine/neovim",
+  --   opts = {
+  --     styles = {
+  --       transparency = true,
+  --     },
+  --   },
+  --   callback = function(opts)
+  --     require("rose-pine").setup(opts)
+  --     vim.cmd("colorscheme rose-pine")
+  --   end,
+  -- },
+  zen = {
+    url = "https://github.com/nendix/zen.nvim",
     opts = {
-      styles = {
-        transparency = true,
-      },
+      transparency = true,
     },
     callback = function(opts)
-      require("rose-pine").setup(opts)
-      vim.cmd("colorscheme rose-pine")
+      require("zen").setup(opts)
+      vim.cmd.colorscheme("zen")
     end,
   },
 
@@ -122,12 +132,15 @@ return {
             },
           },
         },
-        gopls = {},
         clangd = {},
         rust_analyzer = {},
         ts_ls = {},
         pyright = {},
         ruff = {},
+        ansiblels = {
+          cmd = { '/opt/homebrew/Cellar/node/24.9.0/lib/node_modules/@ansible/ansible-language-server/bin/ansible-language-server', '--stdio' }
+        },
+        gopls = {},
       }
 
       for server, config in pairs(lsps) do
