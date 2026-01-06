@@ -17,7 +17,14 @@ vim.o.scrolloff = 10
 vim.o.guicursor = "n-i-v-c:block"
 vim.o.winborder = 'rounded'
 vim.o.path = vim.o.path .. ',**,'
-vim.opt.cursorline = true
+vim.o.cursorline = true
+vim.o.colorcolumn = "80"
+
+if vim.fn.has("win32") == 1 then
+  vim.o.shell = "cmd.exe"
+  vim.o.shellcmdflag = "/c"
+  vim.o.shellpipe = ">%s 2>&1"
+end
 
 -- stop highlights
 vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })
