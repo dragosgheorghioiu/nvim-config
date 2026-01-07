@@ -1,20 +1,4 @@
 return {
-  -- fzf plugin
-  fzf = {
-    url = "https://github.com/ibhagwan/fzf-lua",
-    callback = function()
-      local fzf = require('fzf-lua')
-
-      vim.keymap.set("n", "<leader>pf", fzf.files)
-      vim.keymap.set("n", "<leader>pb", fzf.buffers)
-      vim.keymap.set("n", "<leader>ps", fzf.live_grep)
-      vim.keymap.set("n", "<leader>pd", fzf.diagnostics_workspace)
-      vim.keymap.set("n", "<leader>h", fzf.help_tags)
-
-      fzf.setup()
-    end
-  },
-
   zen = {
     url = "https://github.com/nendix/zen.nvim",
     opts = {
@@ -23,6 +7,19 @@ return {
     callback = function(opts)
       require("zen").setup(opts)
       vim.cmd.colorscheme("zen")
+    end,
+  },
+
+  oil = {
+    url = "https://github.com/stevearc/oil.nvim",
+    opts = {
+      view_options = {
+        show_hidden = true,
+      }
+    },
+    callback = function(opts)
+      vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })
+      require("oil").setup(opts)
     end,
   },
 
@@ -52,17 +49,12 @@ return {
         },
         rust_analyzer = {},
         ts_ls = {},
+        clangd = {},
         pyright = {},
         ruff = {},
-        ansiblels = {
-          cmd = { '/opt/homebrew/Cellar/node/24.9.0/lib/node_modules/@ansible/ansible-language-server/bin/ansible-language-server', '--stdio' }
-        },
-        gopls = {},
       }
 
       for server, config in pairs(lsps) do
-        config.capabilities = capabilities
-
         vim.lsp.config(server, config)
         vim.lsp.enable(server)
       end

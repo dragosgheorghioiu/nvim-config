@@ -24,10 +24,10 @@ local function ensure_plugin_dir()
 end
 
 
-local function run_command_on_plugin_dir(plugin_name, 
-                                         plugin_details, 
-                                         cmd, 
-                                         cwd, 
+local function run_command_on_plugin_dir(plugin_name,
+                                         plugin_details,
+                                         cmd,
+                                         cwd,
                                          run_build_command)
   local plugin_dir = ensure_plugin_dir()
   local install_path = plugin_dir .. plugin_name

@@ -7,16 +7,6 @@ vim.api.nvim_create_autocmd("TextYankPost", {
   end,
 })
 
---  right qf
-vim.api.nvim_create_autocmd("FileType", {
-  pattern = "qf",
-  callback = function()
-    vim.cmd("wincmd L")
-    vim.api.nvim_win_set_width(0, 80)
-  end,
-})
-
-
 -- lsp autocommands
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
@@ -26,7 +16,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
 
     if client ~= nil and client:supports_method('textDocument/completion') then
       vim.lsp.completion.enable(true, client.id, ev.buf, {
-        autotrigger = true,
         convert = function(item)
           return { abbr = item.label:gsub("%b()", "") }
         end,
