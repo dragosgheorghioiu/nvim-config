@@ -60,6 +60,8 @@ vim.opt.modifiable = true
 vim.opt.path:append('**')
 vim.opt.splitright = true
 vim.opt.splitbelow = true
+vim.opt.exrc = true
+vim.opt.secure = true
 
 local undodir = vim.fn.expand("~/.vim/undodir")
 if vim.fn.isdirectory(undodir) == 0 then
@@ -95,29 +97,12 @@ vim.opt.wildignore:append({ "*.o", "*.obj", "*.pyc", "*.class", "*.jar" })
 vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })
 
 
--- fast find
-vim.keymap.set("n", "<leader>pf", ":find ", { desc = "Find file" })
-vim.keymap.set("n", "<leader>pvf", ":vert sfind ", { desc = "Find file in vertical split" })
-vim.keymap.set(
-  "n",
-  "<leader>ps",
-  ":vimgrep // **<Left><Left><Left><Left>",
-  { desc = "Find in files from current dir" }
-)
-vim.keymap.set(
-  "n",
-  "<leader>pd",
-  function()
-    vim.diagnostic.setqflist()
-  end,
-  { desc = "Find all diagnostics (quickfix)" }
-)
-
-
 -- config
 vim.keymap.set("n", "<leader>rc", ":e $MYVIMRC<CR>", { desc = "Edit config" })
 vim.keymap.set("n", "<leader>rl", ":so $MYVIMRC<CR>", { desc = "Reload config" })
 
+-- build command
+vim.keymap.set("n", "<leader>b", ":make<CR>", { desc = "Build project" })
 
 -- autocommands configs
 require("autocommands")
