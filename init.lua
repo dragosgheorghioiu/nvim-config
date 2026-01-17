@@ -63,6 +63,10 @@ vim.opt.splitbelow = true
 vim.opt.exrc = true
 vim.opt.secure = true
 
+-- load local project config
+vim.opt.exrc = true
+vim.opt.secure = true
+
 local undodir = vim.fn.expand("~/.vim/undodir")
 if vim.fn.isdirectory(undodir) == 0 then
   vim.fn.mkdir(undodir, "p")
@@ -100,6 +104,7 @@ vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })
 -- config
 vim.keymap.set("n", "<leader>rc", ":e $MYVIMRC<CR>", { desc = "Edit config" })
 vim.keymap.set("n", "<leader>rl", ":so $MYVIMRC<CR>", { desc = "Reload config" })
+
 
 -- build command
 vim.keymap.set("n", "<leader>b", ":make<CR>", { desc = "Build project" })

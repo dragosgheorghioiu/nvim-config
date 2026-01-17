@@ -1,20 +1,4 @@
 return {
-  -- fzf plugin
-  fzf = {
-    url = "https://github.com/ibhagwan/fzf-lua",
-    callback = function()
-      local fzf = require('fzf-lua')
-
-      vim.keymap.set("n", "<leader>pf", fzf.files)
-      vim.keymap.set("n", "<leader>pb", fzf.buffers)
-      vim.keymap.set("n", "<leader>ps", fzf.live_grep)
-      vim.keymap.set("n", "<leader>pd", fzf.diagnostics_workspace)
-      vim.keymap.set("n", "<leader>h", fzf.help_tags)
-
-      fzf.setup()
-    end
-  },
-
   blink_cmp = {
     url = "https://github.com/Saghen/blink.cmp",
     build = "cargo build --release",
@@ -65,6 +49,21 @@ return {
     end,
   },
 
+  -- fzf lua
+  fzf = {
+    url = "https://github.com/ibhagwan/fzf-lua",
+    callback = function()
+      local fzf = require('fzf-lua')
+      vim.keymap.set("n", "<leader>pf", fzf.files)
+      vim.keymap.set("n", "<leader>pb", fzf.buffers)
+      vim.keymap.set("n", "<leader>ps", fzf.live_grep)
+      vim.keymap.set("n", "<leader>pd", fzf.diagnostics_workspace)
+      vim.keymap.set("n", "<leader>h", fzf.help_tags)
+
+      fzf.setup()
+    end
+  },
+
   -- lsp_config
   lsp_config = {
     url = "https://github.com/neovim/nvim-lspconfig",
@@ -91,10 +90,10 @@ return {
         },
         rust_analyzer = {},
         ts_ls = {},
-        clangd = {},
         pyright = {},
         ruff = {},
         graphql = {},
+        clangd = {},
       }
 
       for server, config in pairs(lsps) do
