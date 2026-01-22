@@ -1,5 +1,5 @@
-local plugins_list = require("plugins.plugins_list")
-local plugin_log = require("plugins.plugin_log")
+local plugins_list = require("plugin_manager.plugins_list")
+local plugin_log = require("plugin_manager.plugin_log")
 
 local done = 0
 local total = 0

@@ -118,5 +118,4 @@ require("terminal").setup()
 
 
 -- plugins
-require("plugins").setup()
-
+require("plugin_manager").setup()
