@@ -119,3 +119,4 @@ require("terminal").setup()
 
 -- plugins
 require("plugins").setup()
+

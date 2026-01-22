@@ -12,15 +12,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
     vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
-    local client = vim.lsp.get_client_by_id(ev.data.client_id)
-
-    if client ~= nil and client:supports_method('textDocument/completion') then
-      vim.lsp.completion.enable(true, client.id, ev.buf, {
-        convert = function(item)
-          return { abbr = item.label:gsub("%b()", "") }
-        end,
-      })
-    end
 
     local opts = { buffer = ev.buf }
     vim.keymap.set("n", "<leader>f", function()

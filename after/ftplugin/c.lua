@@ -15,3 +15,8 @@ vim.keymap.set("n", "<leader>ch", function()
   vim.cmd('edit ' .. new_path)
 end, { desc = "Switch between source and header" })
 
+vim.diagnostic.config({
+  virtual_text = false,
+  signs = false,
+  underline = false,
+})

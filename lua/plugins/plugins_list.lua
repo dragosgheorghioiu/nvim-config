@@ -1,30 +1,4 @@
 return {
-  blink_cmp = {
-    url = "https://github.com/Saghen/blink.cmp",
-    build = "cargo build --release",
-    opts = {
-      completion = {
-        menu = { border = 'none' },
-      },
-    },
-    callback = function(opts)
-      require("blink.cmp").setup(opts)
-      local capabilities = require('blink.cmp').get_lsp_capabilities()
-      local lsps = {
-        ts_ls = {},
-        graphql = {},
-      }
-
-      for server, config in pairs(lsps) do
-        config.capabilities = capabilities
-
-        vim.lsp.config(server, config)
-        vim.lsp.enable(server)
-      end
-    end,
-  },
-
-
   zen = {
     url = "https://github.com/nendix/zen.nvim",
     opts = {
@@ -49,7 +23,6 @@ return {
     end,
   },
 
-  -- fzf lua
   fzf = {
     url = "https://github.com/ibhagwan/fzf-lua",
     callback = function()
@@ -88,11 +61,14 @@ return {
             },
           },
         },
+        -- rust
         rust_analyzer = {},
+        -- typescript
         ts_ls = {},
+        -- python
         pyright = {},
         ruff = {},
-        graphql = {},
+        -- c/c++
         clangd = {},
       }
 
