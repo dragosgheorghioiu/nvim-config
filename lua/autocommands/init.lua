@@ -11,7 +11,8 @@ vim.api.nvim_create_autocmd("TextYankPost", {
 vim.api.nvim_create_autocmd("LspAttach", {
   group = vim.api.nvim_create_augroup("UserLspConfig", {}),
   callback = function(ev)
-    vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    -- vim.bo[ev.buf].omnifunc = "v:lua.vim.lsp.omnifunc"
+    -- vim.keymap.set("i", "<C-Space>", "<C-x><C-o>", { buffer = ev.buf })
 
     local opts = { buffer = ev.buf }
     vim.keymap.set("n", "<leader>f", function()

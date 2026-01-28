@@ -1,4 +1,27 @@
 return {
+  blink_cmp = {
+    url = "https://github.com/Saghen/blink.cmp",
+    build = "cargo build --release",
+    opts = {
+      completion = {
+        menu = { border = 'none' },
+        trigger = {
+          show_on_insert = false,
+          show_on_keyword = false,
+        },
+      },
+    },
+    callback = function(opts)
+      require("blink.cmp").setup(opts)
+
+      -- replace omnifunc if loading blink
+      vim.opt.omnifunc = ""
+      vim.keymap.set("i", "<C-x><C-o>", function()
+        require("blink.cmp").show()
+      end, { desc = "Blink completion (replace omni)" })
+    end,
+  },
+
   zen = {
     url = "https://github.com/nendix/zen.nvim",
     opts = {
