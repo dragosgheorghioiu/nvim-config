@@ -1,35 +1,19 @@
 return {
-  blink_cmp = {
-    url = "https://github.com/Saghen/blink.cmp",
-    build = "cargo build --release",
-    opts = {
-      completion = {
-        menu = { border = 'none' },
-        trigger = {
-          show_on_insert = false,
-          show_on_keyword = false,
-        },
-      },
-    },
+  mini_cmp = {
+    url = "https://github.com/nvim-mini/mini.completion",
     callback = function(opts)
-      require("blink.cmp").setup(opts)
-
-      -- replace omnifunc if loading blink
-      vim.opt.omnifunc = ""
-      vim.keymap.set("i", "<C-x><C-o>", function()
-        require("blink.cmp").show()
-      end, { desc = "Blink completion (replace omni)" })
+      require("mini.completion").setup(opts)
     end,
   },
 
-  zen = {
-    url = "https://github.com/nendix/zen.nvim",
+  vscode = {
+    url = "https://github.com/mofiqul/vscode.nvim",
     opts = {
       transparent = true,
     },
     callback = function(opts)
-      require("zen").setup(opts)
-      vim.cmd.colorscheme("zen")
+      require("vscode").setup(opts)
+      vim.cmd.colorscheme("vscode")
     end,
   },
 
@@ -38,7 +22,25 @@ return {
     opts = {
       view_options = {
         show_hidden = true,
-      }
+      },
+      keymaps = {
+        ["g?"] = { "actions.show_help", mode = "n" },
+        ["<CR>"] = "actions.select",
+        ["<C-s>"] = { "actions.select", opts = { vertical = true } },
+        ["<C-h>"] = {},
+        ["<C-t>"] = { "actions.select", opts = { tab = true } },
+        ["<C-p>"] = "actions.preview",
+        ["<C-c>"] = { "actions.close", mode = "n" },
+        ["<C-l>"] = {},
+        ["-"] = { "actions.parent", mode = "n" },
+        ["_"] = { "actions.open_cwd", mode = "n" },
+        ["`"] = { "actions.cd", mode = "n" },
+        ["g~"] = { "actions.cd", opts = { scope = "tab" }, mode = "n" },
+        ["gs"] = { "actions.change_sort", mode = "n" },
+        ["gx"] = "actions.open_external",
+        ["g."] = { "actions.toggle_hidden", mode = "n" },
+        ["g\\"] = { "actions.toggle_trash", mode = "n" },
+      },
     },
     callback = function(opts)
       vim.keymap.set("n", "-", "<CMD>Oil<CR>", { desc = "Open parent directory" })

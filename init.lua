@@ -1,6 +1,5 @@
 -- basic
 vim.g.mapleader = " "
-
 vim.opt.number = true
 vim.opt.relativenumber = true
 vim.opt.cursorline = true
@@ -33,7 +32,7 @@ vim.opt.guicursor = "n-i-v-c:block"
 vim.opt.winborder = 'rounded'
 vim.opt.lazyredraw = true
 vim.opt.synmaxcol = 300
-vim.opt.completeopt = { "menu", "menuone", "popup" }
+vim.opt.completeopt = { "menu", "menuone", "noinsert", "popup" }
 
 
 -- file handling
