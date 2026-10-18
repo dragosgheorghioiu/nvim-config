@@ -7,14 +7,15 @@ vim.opt.cursorline = true
 vim.opt.wrap = false
 vim.opt.scrolloff = 10
 vim.opt.clipboard:append("unnamedplus")
+vim.opt.tags = "./tags;,tags;"
 
 
 -- tabs
+vim.opt.expandtab = true
+vim.opt.shiftwidth = 2
 vim.opt.tabstop = 2
 vim.opt.softtabstop = 2
-vim.opt.shiftwidth = 2
-vim.opt.expandtab = true
-vim.opt.smartindent = true
+vim.opt.smartindent = false
 vim.opt.autoindent = true
 
 
@@ -24,11 +25,11 @@ vim.opt.smartcase = true
 vim.opt.hlsearch = true
 vim.opt.incsearch = true
 
+
 -- looks
 vim.opt.termguicolors = true
 vim.opt.synmaxcol = 300
 vim.opt.signcolumn = "yes"
-vim.opt.colorcolumn = "100"
 vim.opt.guicursor = "n-i-v-c:block"
 vim.opt.winborder = 'rounded'
 vim.opt.lazyredraw = true
@@ -63,6 +64,7 @@ vim.opt.splitbelow = true
 vim.opt.exrc = true
 vim.opt.secure = true
 
+
 -- load local project config
 vim.opt.exrc = true
 vim.opt.secure = true
@@ -79,13 +81,6 @@ if vim.fn.has("win32") == 1 then
   vim.o.shellcmdflag = "/c"
   vim.o.shellpipe = ">%s 2>&1"
 end
-
-
--- window navigation
-vim.keymap.set("n", "<C-h>", "<C-w>h", { desc = "Move to left window" })
-vim.keymap.set("n", "<C-j>", "<C-w>j", { desc = "Move to bottom window" })
-vim.keymap.set("n", "<C-k>", "<C-w>k", { desc = "Move to top window" })
-vim.keymap.set("n", "<C-l>", "<C-w>l", { desc = "Move to right window" })
 
 
 -- performance
@@ -105,6 +100,9 @@ vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })
 vim.keymap.set("n", "<leader>rc", ":e $MYVIMRC<CR>", { desc = "Edit config" })
 vim.keymap.set("n", "<leader>rl", ":so $MYVIMRC<CR>", { desc = "Reload config" })
 
+-- treesitter
+vim.treesitter.language.add('elixir', { path = "/home/dregos/.config/nvim/parser/elixir.so" })
+vim.treesitter.language.register('elixir', { 'ex', 'elixir', 'heex' })
 
 -- build command
 vim.keymap.set("n", "<leader>b", ":make<CR>", { desc = "Build project" })
@@ -119,3 +117,4 @@ require("terminal").setup()
 
 -- plugins
 require("plugin_manager").setup()
+
