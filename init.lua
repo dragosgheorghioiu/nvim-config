@@ -95,14 +95,16 @@ vim.opt.wildignore:append({ "*.o", "*.obj", "*.pyc", "*.class", "*.jar" })
 -- stop highlights
 vim.keymap.set("n", "<Esc>", ":nohl<CR>", { silent = true })
 
+-- snippets jumps
+vim.keymap.set({ "i", "s" }, "<Tab>", function()
+  if vim.snippet.active({ direction = 1 }) then
+    vim.snippet.jump(1)
+  end
+end)
 
 -- config
 vim.keymap.set("n", "<leader>rc", ":e $MYVIMRC<CR>", { desc = "Edit config" })
 vim.keymap.set("n", "<leader>rl", ":so $MYVIMRC<CR>", { desc = "Reload config" })
-
--- treesitter
-vim.treesitter.language.add('elixir', { path = "/home/dregos/.config/nvim/parser/elixir.so" })
-vim.treesitter.language.register('elixir', { 'ex', 'elixir', 'heex' })
 
 -- build command
 vim.keymap.set("n", "<leader>b", ":make<CR>", { desc = "Build project" })
@@ -110,11 +112,5 @@ vim.keymap.set("n", "<leader>b", ":make<CR>", { desc = "Build project" })
 -- autocommands configs
 require("autocommands")
 
-
--- terminal
-require("terminal").setup()
-
-
 -- plugins
-require("plugin_manager").setup()
-
+require("plugins")
